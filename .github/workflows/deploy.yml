@@ -42,7 +42,7 @@ jobs:
       - name: Verify pushed image
         run: docker pull ghcr.io/omarjb20/finalquintoa:latest
 
-          - name: Mostrar variables basicas (solo locales, no secretos)
+      - name: Mostrar variables basicas (solo locales, no secretos)
         run: |
           echo "Host: ${{ secrets.VPS_HOST }}"
           echo "Usuario: ${{ secrets.VPS_USER }}"
