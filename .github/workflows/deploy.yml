@@ -9,26 +9,35 @@ permissions:
   packages: write
 
 jobs:
-  build:
-
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.11"
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: 🔐 Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-    - name: 🏗️ Build and push Docker image
-      uses: docker/build-push-action@v6
-      with:
-        push: true
-        tags: ghcr.io/omarjb20/finalquintoa
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor | toLower }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ghcr.io/omarjb20/finalquintoa:latest
+            ghcr.io/omarjb20/finalquintoa:${{ github.sha }}
+
+      - name: Verify pushed image
+        run: docker pull ghcr.io/omarjb20/finalquintoa:latest
