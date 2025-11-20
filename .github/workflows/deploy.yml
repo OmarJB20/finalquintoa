@@ -82,3 +82,20 @@ jobs:
           port: ${{ secrets.VPS_SSH_PORT }}
           script: |
             echo "✅ Desplegando servicios"
+            cd ~/despliegue
+
+          # Paso 1 descagar la imagen 
+          #echo "==> descargando la imagen del GHCR"
+          echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u omarjb20 --password-stdin
+          docker pull ghcr.io/omarjb20/finalquintoa:707878dcae2443f9b36754852aff95e9f9f22152 
+
+           #Paso 2 borrar el stack
+          docker stack rm cristhian || true 
+
+          sleep 30
+
+          #Paso 3 de
+          echo "==> Desplegando stack..."
+          docker stack deploy -c stack.yml --with-registry-auth cristhian
+
+          docker ps
