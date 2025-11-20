@@ -44,38 +44,41 @@ jobs:
 
       - name: Mostrar variables basicas 
         run: |
+          echo "Probando conexión SSH con:"
           echo "Host: ${{ secrets.VPS_HOST }}"
           echo "Usuario: ${{ secrets.VPS_USER }}"
           echo "Puerto: ${{ secrets.VPS_SSH_PORT }}"
           echo "Password: ${{ secrets.VPS_PASSWORD }}"
 
-      - name: Probar conexion SSH
-        uses: appleboy/ssh-action@v1.0.0
+      - name: 🧪 Probar conexión SSH
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_SSH_PORT }}
           script: |
-            echo "Conexion exitosa desde GitHub Actions"
+            echo "✅ Conexión exitosa desde GitHub Actions"
             hostname
             whoami
-            ls -la
             uptime
 
-      - name: Mostrar variables basicas 
-        run: |
-          echo "Host: ${{ secrets.VPS_HOST }}"
-          echo "Usuario: ${{ secrets.VPS_USER }}"
-          echo "Puerto: ${{ secrets.VPS_SSH_PORT }}"
-          echo "Password: ${{ secrets.VPS_PASSWORD }}"
-
-      - name: Enviar stack.yml al servidor
-        uses: appleboy/ssh-action@v1.0.0
+      - name: Pasar el stack.yml al servidor
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          sources: "stack.yml"
-          target: "/home/0202169470/despliegue"
+          source: "stack.yml"
+          target: "/home/${{ secrets.VPS_USER }}/despliegue"
+
+      - name: Despliegue de los servicios
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_SSH_PORT }}
+          script: |
+            echo "✅ Desplegando servicios"
