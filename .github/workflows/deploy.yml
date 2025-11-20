@@ -79,7 +79,7 @@ jobs:
 
           # Paso 1 descagar la imagen 
           #echo "==> descargando la imagen del GHCR"
-          echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u byronmoreno --password-stdin
+          echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u omarjb20 --password-stdin
           docker pull ghcr.io/omarjb20/finalquintoa:1.0.0
 
           #Paso 2 borrar el stack
