@@ -38,6 +38,7 @@ jobs:
           tags: |
             ghcr.io/omarjb20/finalquintoa:latest
             ghcr.io/omarjb20/finalquintoa:${{ github.sha }}
+            ghcr.io/omarjb20/finalquintoa:1.0.0
 
       - name: Verify pushed image
         run: docker pull ghcr.io/omarjb20/finalquintoa:latest
@@ -87,7 +88,8 @@ jobs:
             # Paso 1 descagar la imagen 
             #echo "==> descargando la imagen del GHCR"
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u omarjb20 --password-stdin
-            docker pull ghcr.io/omarjb20/finalquintoa:707878dcae2443f9b36754852aff95e9f9f22152 
+            docker pull ghcr.io/omarjb20/finalquintoa:1.0.0
+
 
             #Paso 2 borrar el stack
             docker stack rm cristhian || true 
