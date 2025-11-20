@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   santillanapp:
-    image: 
+    image: docker pull ghcr.io/omarjb20/finalquintoa:1.0.0
     deploy:
       replicas: 1
       resources: 
