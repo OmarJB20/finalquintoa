@@ -61,7 +61,7 @@ pagina_html = """
 <body>
     <div class="card">
         <h1>✨ Bienvenido a mi página Flask ✨</h1>
-        <p>Esta página está corriendo en <strong>Python Flask</strong> en el puerto 80.</p>
+        <p>Esta página está corriendo en <strong>Python Flask</strong> en el puerto 5000.</p>
         <button onclick="mostrarMensaje()">Haz clic aquí</button>
         <div id="mensaje" class="mensaje" style="opacity:0;">¡Gracias por visitar mi web! 💚</div>
     </div>
