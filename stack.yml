@@ -1,15 +1,15 @@
-version: "3.9"
+version: '3.9'
 
 services:
   santillanapp:
-    image: docker pull ghcr.io/omarjb20/finalquintoa:1.0.0
+    image: ghcr.io/omarjb20/finalquintoa:1.0.0
     deploy:
       replicas: 1
-      resources: 
+      resources:
         limits:
           cpus: "0.50"
           memory: 512M
-      labels: 
+      labels:
         - "traefik.enable=true"
         - "traefik.http.routers.santillanapp.entrypoints=http"
         - "traefik.http.routers.santillanapp.rule=Host(`santillanapp.byronrm.com`)"
@@ -28,6 +28,3 @@ services:
 networks:
   traefik-public:
     external: true
-
-
-
